@@ -30,7 +30,7 @@ def get_reply_raw(oid, type_, pn, root=None, sort=0):
     else:
         return {'status':resp.status_code, 'content':json.loads(resp.text)}
 
-def get_reply_main(oid, oidtype, oidalias, cursor, root=None, database=None):            # 获取主楼，楼中楼递归调用即可
+def get_reply_main(oid, oidtype, oidalias, cursor, database=None, root=None):            # 获取主楼，楼中楼递归调用即可
     page_max = 1
     count = 1
     reply_container = []
@@ -152,10 +152,26 @@ def get_reply_main(oid, oidtype, oidalias, cursor, root=None, database=None):   
         if database:
             database.commit()
 
-        # print(count, '/', page_max, events)
+        if 'DEEP' not in events:
+            print(oid, oidtype, oidalias, count, '/', page_max, events)
         if count >= page_max:
             break
         else:
             count += 1
 
+def main():
+    d,c = assistances.sql_connect()
+    while 1:
+        targets = assistances.csv_loader()
+        for i in targets:
+            get_reply_main(i['oid'], i['type'], i['alias'], c, d)
+        print('# ------------------------- #')
+        sleeptime = random.randint(15,75)
+        print('# 一轮爬取已完成, 休息%s秒 #' % sleeptime)
+        sleep(sleeptime)
+    d.commit()
+    c.close()
+    d.close()
 
+if __name__ == '__main__':
+    main()
