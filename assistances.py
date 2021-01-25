@@ -89,10 +89,11 @@ def csv_loader(file='config.csv'):
             raise BaseException('找不到对应列!')
 
         for i in range(1, len(f_items)):
-            targets.append({
-                'oid':f_items[i][replies_oid_col],
-                'type':f_items[i][type_col],
-                'alias':None if alias_col is None else f_items[i][alias_col]
-            })
-    
+            if f_items[i][replies_oid_col] and f_items[i][type_col]:
+                targets.append({
+                    'oid':f_items[i][replies_oid_col],
+                    'type':f_items[i][type_col],
+                    'alias':None if alias_col is None else f_items[i][alias_col]
+                })
+
     return targets
