@@ -10,7 +10,7 @@
 - requests    用于与api通信  
 - xmltodict   用于导出数据库为xml, 可选  
   
-TODO: 将数据库筛选导出成xml  
+TODO: 将数据库筛选导出成表格  
 
 # 使用方法
 
