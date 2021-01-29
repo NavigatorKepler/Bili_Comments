@@ -160,14 +160,15 @@ def get_reply_main(oid, oidtype, oidalias, cursor, database=None, root=None):   
             count += 1
 
 def main():
+    print('#   Written By Navigator Kepler #')
     d,c = assistances.sql_connect()
     while 1:
         targets = assistances.csv_loader()
         for i in targets:
             get_reply_main(i['oid'], i['type'], i['alias'], c, d)
-        print('# ------------------------- #')
         sleeptime = random.randint(15,75)
         print('# 一轮爬取已完成, 休息%s秒 #' % sleeptime)
+        print('# ------------------------- #')
         sleep(sleeptime)
     d.commit()
     c.close()
