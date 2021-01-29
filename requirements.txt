@@ -1,4 +1,2 @@
-lxml
 requests
-requests_html
 xmltodict
